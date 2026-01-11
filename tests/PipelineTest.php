@@ -22,7 +22,7 @@ final class PipelineTest extends TestCase
         $middlewareA
             ->shouldReceive('__invoke')
             ->once()
-            ->withArgs(function(MutableContext $context, $next) use (&$order) {
+            ->withArgs(function(MutableContext $context, callable $next) use (&$order) {
                 $order[] = 'mwa-before';
 
                 $next($context);
@@ -36,7 +36,7 @@ final class PipelineTest extends TestCase
         $middlewareB
             ->shouldReceive('__invoke')
             ->once()
-            ->withArgs(function(MutableContext $context, $next) use (&$order) {
+            ->withArgs(function(MutableContext $context, callable $next) use (&$order) {
                 $order[] = 'mwb-before';
                 
                 $next($context);
