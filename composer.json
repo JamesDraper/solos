@@ -26,5 +26,8 @@
         ],
         "phpcs.src": "phpcs --standard=phpcs.src.xml src",
         "phpcs.tests": "phpcs --standard=phpcs.tests.xml src"
+    },
+    "require": {
+        "psr/http-message": "^2.0"
     }
 }
