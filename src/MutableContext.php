@@ -13,7 +13,7 @@ final class MutableContext
     public function set(string $key, mixed $value): self
     {
         $this->data[$key] = $value;
-        
+
         return $this;
     }
 
