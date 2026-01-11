@@ -9,14 +9,22 @@
         "mockery/mockery": "^1.6",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-phpunit": "^2.0",
-        "phpstan/phpstan-mockery": "^2.0"
+        "phpstan/phpstan-mockery": "^2.0",
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "scripts": {
         "test": [
             "@phpunit",
-            "@phpstan"
+            "@phpstan",
+            "@phpcs"
         ],
         "phpunit": "phpunit",
-        "phpstan": "phpstan"
+        "phpstan": "phpstan",
+        "phpcs": [
+            "@phpcs.src",
+            "@phpcs.tests"
+        ],
+        "phpcs.src": "phpcs --standard=phpcs.src.xml src",
+        "phpcs.tests": "phpcs --standard=phpcs.tests.xml src"
     }
 }
