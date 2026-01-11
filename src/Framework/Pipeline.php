@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Solos;
+namespace Solos\Framework;
 
 final class Pipeline
 {

@@ -1,13 +1,17 @@
 <?php
 declare(strict_types=1);
 
-use Solos\MutableContext;
-use Solos\Middleware;
-use Solos\Pipeline;
-use Solos\Handler;
+namespace Tests\Framework;
+
+use Solos\Framework\MutableContext;
+use Solos\Framework\Middleware;
+use Solos\Framework\Pipeline;
+use Solos\Framework\Handler;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+
+use Mockery;
 
 final class PipelineTest extends TestCase
 {
