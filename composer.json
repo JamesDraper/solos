@@ -12,6 +12,10 @@
         "phpstan/phpstan-mockery": "^2.0"
     },
     "scripts": {
+        "test": [
+            "@phpunit",
+            "@phpstan"
+        ],
         "phpunit": "phpunit",
         "phpstan": "phpstan"
     }
