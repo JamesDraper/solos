@@ -5,7 +5,7 @@ namespace Solos\Framework\Routing;
 
 use Solos\Framework\Pipeline;
 
-interface PipelineBuilder
+interface PipelineFactory
 {
     public function __invoke(string $routeName): Pipeline;
 }
