@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace Solos\Framework\Routing;
 
-use Solos\Framework\ImmutableContext;
+use Solos\Framework\ReadOnlyContext;
 use Solos\Framework\Pipeline;
+use Solos\Framework\Context;
 use Solos\Framework\Handler;
 
 final class RoutingHandler implements Handler
@@ -18,9 +19,11 @@ final class RoutingHandler implements Handler
     ) {
     }
 
-    public function __invoke(ImmutableContext $context): void
+    public function __invoke(Context $context): void
     {
-        $route = $this->routeResolver->resolveRoute($context);
+        $readOnlyContext = new ReadOnlyContext($context);
+
+        $route = $this->routeResolver->resolveRoute($readOnlyContext);
 
         ($this->routeContextBinder)($route, $context);
 
