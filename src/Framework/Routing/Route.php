@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace Solos\Framework\Routing;
 
-use LogicException;
+use InvalidArgumentException;
 
-final class Route
+/**
+ * @final
+ */
+class Route
 {
-    private const PARAMETER_TYPES = [
+    private const SCALAR_TYPES = [
         'boolean',
         'integer',
         'string',
@@ -17,11 +20,19 @@ final class Route
 
     private readonly string $name;
 
-    private array $parameters = [];
+    private readonly array $parameters;
 
-    public function __construct(string $name)
+    public function __construct(string $name, array $parameters = [])
     {
         $this->name = $name;
+
+        $this->parameters = array_map(function (mixed $value) {
+            if (!$this->isScalar($value)) {
+                throw $this->makeParameterTypeException($value);
+            }
+
+            return $value;
+        }, $parameters);
     }
 
     public function getName(): string
@@ -29,15 +40,9 @@ final class Route
         return $this->name;
     }
 
-    public function setParameter(string $key, mixed $value): self
+    public function hasParameter(string $key): bool
     {
-        if (! $this->isScalar($value)) {
-            throw $this->makeParameterTypeException($value);
-        }
-
-        $this->parameters[$key] = $value;
-
-        return $this;
+        return array_key_exists($key, $this->parameters);
     }
 
     public function getParameter(string $key): mixed
@@ -52,12 +57,12 @@ final class Route
 
     private function isScalar(mixed $value): bool
     {
-        return in_array(gettype($value), self::PARAMETER_TYPES);
+        return in_array(gettype($value), self::SCALAR_TYPES);
     }
 
-    private function makeParameterTypeException(mixed $value): LogicException
+    private function makeParameterTypeException(mixed $value): InvalidArgumentException
     {
-        return new LogicException(sprintf(
+        return new InvalidArgumentException(sprintf(
             'Route parameters must be scalar values, got %s.',
             gettype($value),
         ));
