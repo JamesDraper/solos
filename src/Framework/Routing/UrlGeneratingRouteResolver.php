@@ -5,8 +5,5 @@ namespace Solos\Framework\Routing;
 
 interface UrlGeneratingRouteResolver extends RouteResolver
 {
-    public function generateUrl(
-        string $routeName,
-        array $parameters = [],
-    ): string;
+    public function generateUrl(Route $route): string;
 }
