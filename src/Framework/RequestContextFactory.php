@@ -7,5 +7,5 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 interface RequestContextFactory
 {
-    public function __invoke(Request $request): MutableContext;
+    public function __invoke(Request $request): Context;
 }

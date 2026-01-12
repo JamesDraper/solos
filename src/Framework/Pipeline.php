@@ -21,21 +21,21 @@ final class Pipeline
         );
     }
 
-    public function __invoke(MutableContext $context): void
+    public function __invoke(Context $context): void
     {
         ($this->pipeline)($context);
     }
 
     private function wrapMiddleware(Middleware $middleware, callable $next): callable
     {
-        return function (MutableContext $context) use ($middleware, $next): void {
+        return function (Context $context) use ($middleware, $next): void {
             $middleware($context, $next);
         };
     }
 
     private function wrapHandler(Handler $handler): callable
     {
-        return function (MutableContext $context) use ($handler): void {
+        return function (Context $context) use ($handler): void {
             $handler($context);
         };
     }

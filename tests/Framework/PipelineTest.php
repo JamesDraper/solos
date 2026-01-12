@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Tests\Framework;
 
-use Solos\Framework\MutableContext;
 use Solos\Framework\Middleware;
 use Solos\Framework\Pipeline;
 use Solos\Framework\Handler;
+use Solos\Framework\Context;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +18,7 @@ final class PipelineTest extends TestCase
     #[Test]
     public function it_executes_middlewares_and_handler_in_order(): void
     {
-        $context = new MutableContext();
+        $context = new Context();
 
         $order = [];
 
@@ -26,7 +26,7 @@ final class PipelineTest extends TestCase
         $middlewareA
             ->shouldReceive('__invoke')
             ->once()
-            ->withArgs(function(MutableContext $context, callable $next) use (&$order) {
+            ->withArgs(function(Context $context, callable $next) use (&$order) {
                 $order[] = 'mwa-before';
 
                 $next($context);
@@ -40,7 +40,7 @@ final class PipelineTest extends TestCase
         $middlewareB
             ->shouldReceive('__invoke')
             ->once()
-            ->withArgs(function(MutableContext $context, callable $next) use (&$order) {
+            ->withArgs(function(Context $context, callable $next) use (&$order) {
                 $order[] = 'mwb-before';
                 
                 $next($context);
@@ -54,7 +54,7 @@ final class PipelineTest extends TestCase
         $handler
             ->shouldReceive('__invoke')
             ->once()
-            ->withArgs(function(MutableContext $context) use (&$order) {
+            ->withArgs(function(Context $context) use (&$order) {
                 $order[] = 'handler';
 
                 return true;
@@ -79,7 +79,7 @@ final class PipelineTest extends TestCase
     #[Test]
     public function middleware_can_short_circuit(): void
     {
-        $context = new MutableContext();
+        $context = new Context();
 
         $called = [];
 
@@ -87,7 +87,7 @@ final class PipelineTest extends TestCase
         $middleware
             ->shouldReceive('__invoke')
             ->once()
-            ->withArgs(function(MutableContext $context, $next) use (&$called) {
+            ->withArgs(function(Context $context, $next) use (&$called) {
                 $called[] = 'middleware';
 
                 return true;

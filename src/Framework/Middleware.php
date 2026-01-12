@@ -5,5 +5,5 @@ namespace Solos\Framework;
 
 interface Middleware
 {
-    public function __invoke(MutableContext $context, callable $next): void;
+    public function __invoke(Context $context, callable $next): void;
 }
