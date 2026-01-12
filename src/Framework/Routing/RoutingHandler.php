@@ -20,7 +20,7 @@ final class RoutingHandler implements Handler
 
     public function __invoke(ImmutableContext $context): void
     {
-        $route = ($this->routeResolver)($context);
+        $route = $this->routeResolver->resolveRoute($context);
 
         ($this->routeContextBinder)($route, $context);
 

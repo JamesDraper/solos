@@ -7,5 +7,5 @@ use Solos\Framework\ImmutableContext;
 
 interface RouteResolver
 {
-    public function __invoke(ImmutableContext $context): Route;
+    public function resolveRoute(ImmutableContext $context): Route;
 }
