@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Framework;
+namespace Tests\Unit\Framework;
 
 use Solos\Framework\Middleware;
 use Solos\Framework\Pipeline;
