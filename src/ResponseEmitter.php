@@ -5,7 +5,10 @@ namespace Solos;
 
 use Psr\Http\Message\ResponseInterface;
 
-final class ResponseEmitter
+/**
+ * @final
+ */
+class ResponseEmitter
 {
     private readonly int $chunkSize;
 

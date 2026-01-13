@@ -5,6 +5,11 @@ namespace Solos\Framework\Routing;
 
 use InvalidArgumentException;
 
+use function array_map;
+use function in_array;
+use function gettype;
+use function sprintf;
+
 /**
  * @final
  */

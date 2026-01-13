@@ -5,9 +5,12 @@ namespace Solos\Framework\Routing;
 
 use Solos\Framework\Context;
 
-final class DefaultRouteContextBinder implements RouteContextBinder
+/**
+ * @final
+ */
+class DefaultRouteContextBinder implements RouteDataContextBinder
 {
-    public function __invoke(Route $route, Context $context): void
+    public function bindRouteDataToContext(Route $route, Context $context): void
     {
         $context->set(Key::ROUTE_NAME, $route->getName());
         $context->set(Key::ROUTE_PARAMETERS, $route->getParameters());

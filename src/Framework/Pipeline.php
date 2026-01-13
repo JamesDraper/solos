@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace Solos\Framework;
 
-final class Pipeline
+/**
+ * @final
+ */
+class Pipeline
 {
     /**
      * @var callable
@@ -21,7 +24,7 @@ final class Pipeline
         );
     }
 
-    public function __invoke(Context $context): void
+    public function run(Context $context): void
     {
         ($this->pipeline)($context);
     }
@@ -29,14 +32,14 @@ final class Pipeline
     private function wrapMiddleware(Middleware $middleware, callable $next): callable
     {
         return function (Context $context) use ($middleware, $next): void {
-            $middleware($context, $next);
+            $middleware->run($context, $next);
         };
     }
 
     private function wrapHandler(Handler $handler): callable
     {
         return function (Context $context) use ($handler): void {
-            $handler($context);
+            $handler->run($context);
         };
     }
 }

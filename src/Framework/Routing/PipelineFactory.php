@@ -7,5 +7,5 @@ use Solos\Framework\Pipeline;
 
 interface PipelineFactory
 {
-    public function __invoke(string $routeName): Pipeline;
+    public function makePipelineForRoute(string $routeName): Pipeline;
 }

@@ -6,7 +6,10 @@ namespace Solos\Framework;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-final class Application
+/**
+ * @final
+ */
+class Application
 {
     public function __construct(
         private readonly RequestContextFactory $requestContextFactory,
@@ -15,11 +18,11 @@ final class Application
     ) {
     }
 
-    public function __invoke(Request $request): Response
+    public function run(Request $request): Response
     {
         $context = ($this->requestContextFactory)($request);
 
-        ($this->pipeline)($context);
+        $this->pipeline->run($context);
 
         return ($this->contextResponseFactory)($context);
     }

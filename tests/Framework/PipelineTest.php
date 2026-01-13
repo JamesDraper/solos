@@ -24,7 +24,7 @@ final class PipelineTest extends TestCase
 
         $middlewareA = Mockery::mock(Middleware::class);
         $middlewareA
-            ->shouldReceive('__invoke')
+            ->shouldReceive('run')
             ->once()
             ->withArgs(function(Context $context, callable $next) use (&$order) {
                 $order[] = 'mwa-before';
@@ -38,7 +38,7 @@ final class PipelineTest extends TestCase
 
         $middlewareB = Mockery::mock(Middleware::class);
         $middlewareB
-            ->shouldReceive('__invoke')
+            ->shouldReceive('run')
             ->once()
             ->withArgs(function(Context $context, callable $next) use (&$order) {
                 $order[] = 'mwb-before';
@@ -52,7 +52,7 @@ final class PipelineTest extends TestCase
 
         $handler = Mockery::mock(Handler::class);
         $handler
-            ->shouldReceive('__invoke')
+            ->shouldReceive('run')
             ->once()
             ->withArgs(function(Context $context) use (&$order) {
                 $order[] = 'handler';
@@ -85,7 +85,7 @@ final class PipelineTest extends TestCase
 
         $middleware = Mockery::mock(Middleware::class);
         $middleware
-            ->shouldReceive('__invoke')
+            ->shouldReceive('run')
             ->once()
             ->withArgs(function(Context $context, $next) use (&$called) {
                 $called[] = 'middleware';
@@ -94,11 +94,11 @@ final class PipelineTest extends TestCase
             });
 
         $handler = Mockery::mock(Handler::class);
-        $handler->shouldNotReceive('__invoke');
+        $handler->shouldNotReceive('run');
 
         $pipeline = new Pipeline($handler, $middleware);
 
-        $pipeline($context);
+        $pipeline->run($context);
 
         $this->assertSame(['middleware'], $called);
     }

@@ -5,5 +5,5 @@ namespace Solos\Framework;
 
 interface Handler
 {
-    public function __invoke(Context $context): void;
+    public function run(Context $context): void;
 }

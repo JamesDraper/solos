@@ -8,34 +8,42 @@ use Solos\Framework\Pipeline;
 use Solos\Framework\Context;
 use Solos\Framework\Handler;
 
-final class RoutingHandler implements Handler
+/**
+ * @final
+ */
+class RoutingHandler implements Handler
 {
     private array $pipelines = [];
 
     public function __construct(
         private readonly RouteResolver $routeResolver,
-        private readonly RouteContextBinder $routeContextBinder,
+        private readonly RouteDataContextBinder $routeDataContextBinder,
         private readonly PipelineFactory $pipelineFactory,
     ) {
     }
 
-    public function __invoke(Context $context): void
+    public function run(Context $context): void
     {
-        $readOnlyContext = new ReadOnlyContext($context);
+        $readOnlyContext = $this->makeReadOnlyContext($context);
 
         $route = $this->routeResolver->resolveRoute($readOnlyContext);
 
-        ($this->routeContextBinder)($route, $context);
+        $this->routeDataContextBinder->bindRouteDataToContext($route, $context);
 
         $pipeline = $this->getPipelineForRoute($route->getName());
 
-        $pipeline($context);
+        $pipeline->run($context);
+    }
+
+    protected function makeReadOnlyContext(Context $context): ReadOnlyContext
+    {
+        return new ReadOnlyContext($context);
     }
 
     private function getPipelineForRoute(string $routeName): Pipeline
     {
         if (!isset($this->pipelines[$routeName])) {
-            $this->pipelines[$routeName] = ($this->pipelineFactory)($routeName);
+            $this->pipelines[$routeName] = $this->pipelineFactory->makePipelineForRoute($routeName);
         }
 
         return $this->pipelines[$routeName];
