@@ -3,10 +3,7 @@ declare(strict_types=1);
 
 namespace Solos\Framework;
 
-/**
- * @final
- */
-class Pipeline
+final class Pipeline
 {
     /**
      * @var callable
