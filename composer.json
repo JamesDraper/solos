@@ -18,7 +18,13 @@
             "@phpstan",
             "@phpcs"
         ],
-        "phpunit": "phpunit",
+        "phpunit": [
+            "@phpunit.unit.layer1",
+            "@phpunit.unit.layer2"
+        ],
+        "phpunit.unit.layer1": "phpunit --testsuite unit.layer1",
+        "phpunit.unit.layer2": "phpunit --testsuite unit.layer2",
+        "phpunit.unit": "phpunit --testsuite unit",
         "phpstan": "phpstan",
         "phpcs": [
             "@phpcs.src",
