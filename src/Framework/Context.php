@@ -3,10 +3,7 @@ declare(strict_types=1);
 
 namespace Solos\Framework;
 
-/**
- * @final
- */
-class Context
+final class Context
 {
     /**
      * @var array<string, mixed>

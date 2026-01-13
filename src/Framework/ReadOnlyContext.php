@@ -3,10 +3,7 @@ declare(strict_types=1);
 
 namespace Solos\Framework;
 
-/**
- * @final
- */
-class ReadOnlyContext
+final class ReadOnlyContext
 {
     /**
      * @internal
