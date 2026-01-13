@@ -20,10 +20,14 @@ class Application
 
     public function run(Request $request): Response
     {
-        $context = ($this->requestContextFactory)($request);
+        $context = $this
+            ->requestContextFactory
+            ->makeContextFromRequest($request);
 
         $this->pipeline->run($context);
 
-        return ($this->contextResponseFactory)($context);
+        return $this
+            ->contextResponseFactory
+            ->makeResponseFromContext($context);
     }
 }

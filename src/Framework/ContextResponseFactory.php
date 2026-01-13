@@ -7,5 +7,5 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 interface ContextResponseFactory
 {
-    public function __invoke(Context $context): Response;
+    public function makeResponseFromContext(Context $context): Response;
 }
