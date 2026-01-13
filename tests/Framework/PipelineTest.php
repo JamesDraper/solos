@@ -62,7 +62,7 @@ final class PipelineTest extends TestCase
 
         $pipeline = new Pipeline($handler, $middlewareA, $middlewareB);
 
-        $pipeline($context);
+        $pipeline->run($context);
 
         $this->assertSame(
             [

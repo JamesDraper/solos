@@ -26,7 +26,7 @@ abstract class RouteResolverTestCase extends TestCase
      */
     final public static function resolveRouteProvider(): array
     {
-        return self::getRouteData();
+        return static::getRouteData();
     }
 
     #[Test]

@@ -25,8 +25,14 @@ class Route
 
     private readonly string $name;
 
+    /**
+     * @var array<string, scalar>
+     */
     private readonly array $parameters;
 
+    /**
+     * @param array<string, scalar> $parameters
+     */
     public function __construct(string $name, array $parameters = [])
     {
         $this->name = $name;
@@ -55,6 +61,9 @@ class Route
         return $this->parameters[$key] ?? null;
     }
 
+    /**
+     * @return array<string, scalar>
+     */
     public function getParameters(): array
     {
         return $this->parameters;

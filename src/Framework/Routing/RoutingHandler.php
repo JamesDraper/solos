@@ -13,6 +13,9 @@ use Solos\Framework\Handler;
  */
 class RoutingHandler implements Handler
 {
+    /**
+     * @var array<string, Pipeline>
+     */
     private array $pipelines = [];
 
     public function __construct(

@@ -23,6 +23,9 @@ abstract class UrlGeneratingRouteResolverTestCase extends TestCase
      */
     abstract protected static function getRouteData();
 
+    /**
+     * @return array<string, array{route: Route, context: Context}>
+     */
     final public static function resolveRouteProvider(): array
     {
         $routeData = static::getRouteData();
@@ -35,6 +38,9 @@ abstract class UrlGeneratingRouteResolverTestCase extends TestCase
         }, $routeData);
     }
 
+    /**
+     * @return array<string, array{url: string, route: Route}>
+     */
     final public static function generateUrlProvider(): array
     {
         $routeData = static::getRouteData();
