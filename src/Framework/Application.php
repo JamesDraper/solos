@@ -6,10 +6,7 @@ namespace Solos\Framework;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-/**
- * @final
- */
-class Application
+final class Application
 {
     public function __construct(
         private readonly RequestContextFactory $requestContextFactory,
