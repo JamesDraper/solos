@@ -79,7 +79,7 @@ final class ContextTest extends TestCase
             ->context
             ->set('one', 'two')
             ->set('three', 'four');
-        
+
         $this->assertSame([
             'one' => 'two',
             'three' => 'four',
@@ -92,7 +92,7 @@ final class ContextTest extends TestCase
         $this->context->set('one', 'two');
 
         $array = $this->context->toArray();
-        
+
         $array['one'] = 'three';
 
         $this->assertSame('two', $this->context->get('one'));

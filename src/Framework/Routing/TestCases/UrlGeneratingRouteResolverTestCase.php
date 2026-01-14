@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+// phpcs:disable PSR1.Methods.CamelCapsMethodName
+
 namespace Solos\Framework\Routing\TestCases;
 
 use Solos\Framework\Routing\UrlGeneratingRouteResolver;

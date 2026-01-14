@@ -30,7 +30,7 @@ final class ReadOnlyContextTest extends TestCase
             ->context
             ->set('one', 'two')
             ->set('three', 'four');
-        
+
         $this->assertSame([
             'one' => 'two',
             'three' => 'four',

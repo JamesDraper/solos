@@ -33,6 +33,6 @@
             "@phpcs.tests"
         ],
         "phpcs.src": "phpcs --standard=phpcs.src.xml src",
-        "phpcs.tests": "phpcs --standard=phpcs.tests.xml src"
+        "phpcs.tests": "phpcs --standard=phpcs.tests.xml tests"
     }
 }
