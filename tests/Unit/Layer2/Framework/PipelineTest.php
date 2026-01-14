@@ -11,102 +11,84 @@ use Solos\Framework\Context;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Mockery;
+use ArrayObject;
 
 final class PipelineTest extends TestCase
 {
     #[Test]
     public function it_executes_middlewares_and_handler_in_order(): void
     {
-        $context = new Context();
+        $context = new Context;
 
-        $order = [];
+        $context->set('order', new ArrayObject);
 
-        $middlewareA = Mockery::mock(Middleware::class);
-        $middlewareA
-            ->shouldReceive('run')
-            ->once()
-            ->withArgs(function(Context $context, callable $next) use (&$order) {
-                $order[] = 'mwa-before';
+        $middlewareA = new class implements Middleware {
+            public function run(Context $context, callable $next): void
+            {
+                $context->get('order')->append('mwa-before');
 
                 $next($context);
 
-                $order[] = 'mwa-after';
-                
-                return true;
-            });
+                $context->get('order')->append('mwa-after');
+            }
+        };
 
-        $middlewareB = Mockery::mock(Middleware::class);
-        $middlewareB
-            ->shouldReceive('run')
-            ->once()
-            ->withArgs(function(Context $context, callable $next) use (&$order) {
-                $order[] = 'mwb-before';
-                
+        $middlewareB = new class implements Middleware {
+            public function run(Context $context, callable $next): void
+            {
+                $context->get('order')->append('mwb-before');
+
                 $next($context);
-                
-                $order[] = 'mwb-after';
-                
-                return true;
-            });
 
-        $handler = Mockery::mock(Handler::class);
-        $handler
-            ->shouldReceive('run')
-            ->once()
-            ->withArgs(function(Context $context) use (&$order) {
-                $order[] = 'handler';
+                $context->get('order')->append('mwb-after');
+            }
+        };
 
-                return true;
-            });
+        $handler = new class implements Handler {
+            public function run(Context $context): void
+            {
+                $context->get('order')->append('handler');
+            }
+        };
 
         $pipeline = new Pipeline($handler, $middlewareA, $middlewareB);
 
         $pipeline->run($context);
 
-        $this->assertSame(
-            [
-                'mwa-before',
-                'mwb-before',
-                'handler',
-                'mwb-after',
-                'mwa-after',
-            ],
-            $order,
-        );
+        $this->assertSame([
+            'mwa-before',
+            'mwb-before',
+            'handler',
+            'mwb-after',
+            'mwa-after',
+        ], $context->get('order')->getArrayCopy());
     }
 
     #[Test]
     public function middleware_can_short_circuit(): void
     {
-        $context = new Context();
+        $context = new Context;
 
-        $called = [];
+        $context->set('order', new ArrayObject);
 
-        $middleware = Mockery::mock(Middleware::class);
-        $middleware
-            ->shouldReceive('run')
-            ->once()
-            ->withArgs(function(Context $context, $next) use (&$called) {
-                $called[] = 'middleware';
+        $middleware = new class implements Middleware {
+            public function run(Context $context, callable $next): void
+            {
+                $context->get('order')->append('middleware');
+            }
+        };
 
-                return true;
-            });
-
-        $handler = Mockery::mock(Handler::class);
-        $handler->shouldNotReceive('run');
+        $handler = new class implements Handler {
+            public function run(Context $context): void
+            {
+                $context->get('order')->append('handler');
+            }
+        };
 
         $pipeline = new Pipeline($handler, $middleware);
 
         $pipeline->run($context);
 
-        $this->assertSame(['middleware'], $called);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        Mockery::close();
+        $this->assertSame(['middleware'], $context->get('order')->getArrayCopy());
     }
 }
