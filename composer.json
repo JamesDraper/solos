@@ -4,6 +4,9 @@
             "Solos\\": "src"
         }
     },
+    "require": {
+        "psr/http-message": "^2.0"
+    },
     "require-dev": {
         "phpunit/phpunit": "^12.5",
         "phpstan/phpstan": "^2.1",
@@ -31,8 +34,5 @@
         ],
         "phpcs.src": "phpcs --standard=phpcs.src.xml src",
         "phpcs.tests": "phpcs --standard=phpcs.tests.xml src"
-    },
-    "require": {
-        "psr/http-message": "^2.0"
     }
 }
