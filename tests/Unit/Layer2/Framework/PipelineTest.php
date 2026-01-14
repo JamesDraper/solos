@@ -18,36 +18,56 @@ final class PipelineTest extends TestCase
     #[Test]
     public function it_executes_middlewares_and_handler_in_order(): void
     {
+        /**
+         * @var ArrayObject<int, string> $order
+         */
+        $order = new ArrayObject;
+
         $context = new Context;
 
-        $context->set('order', new ArrayObject);
+        $context->set('order', $order);
 
         $middlewareA = new class implements Middleware {
             public function run(Context $context, callable $next): void
             {
-                $context->get('order')->append('mwa-before');
+                /**
+                 * @var ArrayObject<int, string> $order
+                 */
+                $order = $context->get('order');
+
+                $order->append('mwa-before');
 
                 $next($context);
 
-                $context->get('order')->append('mwa-after');
+                $order->append('mwa-after');
             }
         };
 
         $middlewareB = new class implements Middleware {
             public function run(Context $context, callable $next): void
             {
-                $context->get('order')->append('mwb-before');
+                /**
+                 * @var ArrayObject<int, string> $order
+                 */
+                $order = $context->get('order');
+
+                $order->append('mwb-before');
 
                 $next($context);
 
-                $context->get('order')->append('mwb-after');
+                $order->append('mwb-after');
             }
         };
 
         $handler = new class implements Handler {
             public function run(Context $context): void
             {
-                $context->get('order')->append('handler');
+                /**
+                 * @var ArrayObject<int, string> $order
+                 */
+                $order = $context->get('order');
+
+                $order->append('handler');
             }
         };
 
@@ -61,27 +81,42 @@ final class PipelineTest extends TestCase
             'handler',
             'mwb-after',
             'mwa-after',
-        ], $context->get('order')->getArrayCopy());
+        ], $order->getArrayCopy());
     }
 
     #[Test]
     public function middleware_can_short_circuit(): void
     {
+        /**
+         * @var ArrayObject<int, string> $order
+         */
+        $order = new ArrayObject;
+
         $context = new Context;
 
-        $context->set('order', new ArrayObject);
+        $context->set('order', $order);
 
         $middleware = new class implements Middleware {
             public function run(Context $context, callable $next): void
             {
-                $context->get('order')->append('middleware');
+                /**
+                 * @var ArrayObject<int, string> $order
+                 */
+                $order = $context->get('order');
+
+                $order->append('middleware');
             }
         };
 
         $handler = new class implements Handler {
             public function run(Context $context): void
             {
-                $context->get('order')->append('handler');
+                /**
+                 * @var ArrayObject<int, string> $order
+                 */
+                $order = $context->get('order');
+
+                $order->append('handler');
             }
         };
 
@@ -89,6 +124,6 @@ final class PipelineTest extends TestCase
 
         $pipeline->run($context);
 
-        $this->assertSame(['middleware'], $context->get('order')->getArrayCopy());
+        $this->assertSame(['middleware'], $order->getArrayCopy());
     }
 }
