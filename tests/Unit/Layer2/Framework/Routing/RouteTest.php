@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Unit\Layer1\Framework\Routing;
+namespace Tests\Unit\Layer2\Framework\Routing;
 
 use Solos\Framework\Routing\Route;
 

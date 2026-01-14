@@ -7,16 +7,16 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="unit.layer0">
-            <directory>tests/Unit/Layer0</directory>
-        </testsuite>
-
         <testsuite name="unit.layer1">
             <directory>tests/Unit/Layer1</directory>
         </testsuite>
 
         <testsuite name="unit.layer2">
             <directory>tests/Unit/Layer2</directory>
+        </testsuite>
+
+        <testsuite name="unit.layer3">
+            <directory>tests/Unit/Layer3</directory>
         </testsuite>
     </testsuites>
 </phpunit>

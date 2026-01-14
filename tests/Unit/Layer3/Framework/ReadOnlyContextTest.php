@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Unit\Layer2\Framework;
+namespace Tests\Unit\Layer3\Framework;
 
 use Solos\Framework\ReadOnlyContext;
 use Solos\Framework\Context;

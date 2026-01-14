@@ -21,13 +21,13 @@
             "@phpcs"
         ],
         "phpunit": [
-            "@phpunit.unit.layer0",
             "@phpunit.unit.layer1",
-            "@phpunit.unit.layer2"
+            "@phpunit.unit.layer2",
+            "@phpunit.unit.layer3"
         ],
-        "phpunit.unit.layer0": "phpunit --testsuite unit.layer0",
         "phpunit.unit.layer1": "phpunit --testsuite unit.layer1",
         "phpunit.unit.layer2": "phpunit --testsuite unit.layer2",
+        "phpunit.unit.layer3": "phpunit --testsuite unit.layer3",
         "phpunit.unit": "phpunit --testsuite unit",
         "phpstan": "phpstan",
         "phpcs": [
