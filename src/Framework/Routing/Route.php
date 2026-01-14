@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Solos\Framework\Routing;
 
+use Solos\Framework\TypeFormatter;
+
 use InvalidArgumentException;
 
 use function array_map;
@@ -74,8 +76,8 @@ final class Route
     private function makeParameterTypeException(mixed $value): InvalidArgumentException
     {
         return new InvalidArgumentException(sprintf(
-            'Route parameters must be scalar values, got %s.',
-            gettype($value),
+            'Route parameters must be scalar values, got "%s".',
+            TypeFormatter::format($value),
         ));
     }
 }

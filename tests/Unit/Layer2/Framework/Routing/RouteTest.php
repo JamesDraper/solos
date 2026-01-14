@@ -71,9 +71,8 @@ final class RouteTest extends TestCase
     public function it_throws_if_a_parameter_is_not_scalar(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            'Route parameters must be scalar values'
-        );
+        $this->expectExceptionMessage('Route parameters must be scalar values, got "object(stdClass)".');
+
 
         // @phpstan-ignore-next-line argument.type
         new Route('route.name', [
@@ -85,9 +84,7 @@ final class RouteTest extends TestCase
     public function it_throws_if_a_parameter_is_an_array(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(
-            'Route parameters must be scalar values'
-        );
+        $this->expectExceptionMessage('Route parameters must be scalar values, got "array".');
 
         // @phpstan-ignore-next-line argument.type
         new Route('route.name', [
