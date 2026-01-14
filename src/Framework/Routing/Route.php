@@ -10,10 +10,7 @@ use function in_array;
 use function gettype;
 use function sprintf;
 
-/**
- * @final
- */
-class Route
+final class Route
 {
     private const SCALAR_TYPES = [
         'boolean',
